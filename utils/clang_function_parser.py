@@ -1,15 +1,8 @@
 import clang.cindex
 import os
 import logging
-from config import find_libclang
 
-# Set the library file for Clang.
-libclang_path = find_libclang()
-if not libclang_path:
-    libclang_path = input(
-        "libclang not found, please enter path to libclang library(.dll/.so/.dylib):")
-clang.cindex.Config.set_library_file(libclang_path)
-clang.cindex.Config.set_compatibility_check(False)
+
 
 
 def get_cursor_text(cursor: clang.cindex.Cursor):
