@@ -24,11 +24,11 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
 2. Install Dependencies:
         -   pip install -r requirements.txt
 
-3. set up a .env file with the openAI API Key
+3. make sure there is a .env file with the OPENAI_API_KEY
 
-4. Run the Project: you can run the project in two interfaces:
-    **GUI:**        run: python3 streamlit_main.py
-    **Terminal:**   run: python3 main.py
+4. Run the Project:use the following commands to run the project in two modes:
+    **GUI:**        streamlit run streamlit_main.py
+    **Terminal:**   python3 main.py
 
 # Disclaimers
 1. There is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
