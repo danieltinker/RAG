@@ -32,4 +32,4 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
 
 # Disclaimers
 1. There is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
-2. Cpp Methods are not supported.
+2. Cpp Object's Methods are not supported in the parsing process.

@@ -11,32 +11,17 @@ from services.search_service import SearchService
 import clang.cindex
 from clang.cindex import LibclangError
 from utils.formatter import print_formatted_function_console  # Import the formatter
-from config import find_libclang
 
-def set_libclang():
-    libclang_path = find_libclang()
-    if not libclang_path:
-        libclang_path = input("libclang not found, please enter path to libclang library(.dll/.so/.dylib):")
-    clang.cindex.Config.set_library_file(libclang_path)
-    clang.cindex.Config.set_compatibility_check(False)
-    return libclang_path
-    
 def main():
     # Set the library file for Clang.
-    libclang_path = set_libclang()
     
     dir_path = input("Enter the path to your codebase directory: ").strip()
-    ask_libclang = True
     start_time = time.time()
-    while ask_libclang:
-        try:
-            symbols = symbol_extractor.extract_symbols_from_directory(dir_path)
-            ask_libclang = False
-        except LibclangError:
-            ask_libclang = True
-            print("Error using libclang, library path might be incorrect")
-            libclang_path = set_libclang()
-    
+    try:
+        symbols = symbol_extractor.extract_symbols_from_directory(dir_path)
+    except LibclangError:
+        print("Error using libclang, library path might be incorrect")
+
     if not symbols:
         logging.error("No symbols found. Check the extraction method or the codebase contents.")
         return
