@@ -7,9 +7,9 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
 # Prerequisites
 - **Python:** Version 3.11 is required.
 - **pip:** Ensure you have the latest version of pip installed.
+- **LLVM with LIBCLANG:** If you haven’t already, download and install LLVM from the LLVM website.
 - **Virtual Environment (Optional but Recommended):** To keep dependencies isolated.
-- **LLVM:** If you haven’t already, download and install LLVM from the LLVM website.
-- **CLANG:** 
+
 - **OPENAI API KEY:** The program is operating via the authenticated OpenAI API.
 - **C\C++ CODEBASE:** The program is proccessing only c\c++ files.
 
