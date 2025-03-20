@@ -8,7 +8,6 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
 - **Python:** Version 3.11 is required.
 - **pip:** Ensure you have the latest version of pip installed.
 - **LLVM with LIBCLANG:** If you haven’t already, download and install LLVM from the LLVM website.
-- **Virtual Environment (Optional but Recommended):** To keep dependencies isolated.
 
 - **OPENAI API KEY:** The program is operating via the authenticated OpenAI API.
 - **C\C++ CODEBASE:** The program is proccessing only c\c++ files.
@@ -25,9 +24,11 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
 2. Install Dependencies:
         -   pip install -r requirements.txt
 
-3. Run the Project: you can run the project in two interfaces:
+3. set up a .env file with the openAI API Key
+
+4. Run the Project: you can run the project in two interfaces:
     **GUI:**        run: python3 streamlit_main.py
     **Terminal:**   run: python3 main.py
 
 # Disclaimers
-there is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
+There is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
