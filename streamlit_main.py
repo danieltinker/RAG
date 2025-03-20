@@ -53,15 +53,17 @@ if st.button("Build Index"):
     else:
         with st.spinner("Extracting symbols and building index..."):
             start_time = time.time()
-            ask_libclang = True
-            while ask_libclang:
-                try:
-                    symbols = extract_symbols_from_directory(dir_path)
-                    ask_libclang = False
-                    st.success(f"Libclang path found succesfully :)")
-                except LibclangError:
-                    st.error("Libclang Path Is Invalid, please find it on your computer (see LLVM Installation, README file)")
-                    st.stop()
+            # Create a placeholder for displaying libclang status.
+            libclang_status_placeholder = st.empty()
+            try:
+                symbols = extract_symbols_from_directory(dir_path)
+                # If extraction is successful, update the placeholder.
+                libclang_status_placeholder.success("Libclang path found successfully :)")
+            except LibclangError:
+                # Update the placeholder with the error message.
+                libclang_status_placeholder.error("Libclang Path Is Invalid, please find it on your computer (see LLVM Installation, README file)")
+                st.stop()  # Stop execution until the user updates the libclang path.
+                
             if not symbols:
                 st.error("No symbols found. Check the extraction method or your codebase contents.")
             else:
