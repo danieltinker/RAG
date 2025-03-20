@@ -1,10 +1,15 @@
 # RAG X Python 3.11 Project
 This project implements a Retrieval Augmented Generation (RAG) system using Python 3.11 currently supporting splitting of cpp, c files only. It integrates retrieval-based methods with generative models to enhance tasks such as question answering, summarization, and more.
 
+# Goal
+Retrieval-Augmented Generation (RAG) is designed to enhance the quality and factual accuracy of generated content by combining a language generation model with a retrieval mechanism.
+
 # Prerequisites
 - **Python:** Version 3.11 is required.
 - **pip:** Ensure you have the latest version of pip installed.
 - **Virtual Environment (Optional but Recommended):** To keep dependencies isolated.
+- **OPENAI API KEY:** The program is operating via the authenticated OpenAI API.
+- **C\C++ CODEBASE:** The program is proccessing only c\c++ files.
 
 # Setup And Execution
 1. Create a Virtual Environment:
