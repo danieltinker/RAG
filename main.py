@@ -7,7 +7,7 @@ from config import OPENAI_API_KEY, EMBEDDING_MODEL
 from controllers import symbol_extractor
 from controllers.index_builder import IndexBuilder
 from services.embedding_service import EmbeddingService
-from services.search import SearchService
+from services.search_service import SearchService
 
 def main():
     dir_path = input("Enter the path to your codebase directory: ").strip()
