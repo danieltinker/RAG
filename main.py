@@ -26,7 +26,7 @@ def main():
     libclang_path = set_libclang()
     
     dir_path = input("Enter the path to your codebase directory: ").strip()
-
+    ask_libclang = True
     start_time = time.time()
     while ask_libclang:
         try:

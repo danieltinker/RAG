@@ -18,7 +18,7 @@ def find_libclang():
     if sys.platform == "darwin":
         # macOS common paths for libclang.dylib
         possible_paths = [
-            "/Library/Developer/CommandLineTools/usr/lib/libclangg.dylib",
+            "/Library/Developer/CommandLineTools/usr/lib/libclang.dylib",
             "/usr/local/opt/llvm/lib/libclang.dylib",
             "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libclang.dylib"
         ]
