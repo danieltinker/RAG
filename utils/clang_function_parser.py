@@ -1,11 +1,18 @@
 import clang.cindex
 import os
 import logging
-# Set the library file for Clang from CommandLineTools on your Intel Mac.
-clang.cindex.Config.set_library_file("/Library/Developer/CommandLineTools/usr/lib/libclang.dylib")
+from config import find_libclang
+
+# Set the library file for Clang.
+libclang_path = find_libclang()
+if not libclang_path:
+    libclang_path = input(
+        "libclang not found, please enter path to libclang library(.dll/.so/.dylib):")
+clang.cindex.Config.set_library_file(libclang_path)
 clang.cindex.Config.set_compatibility_check(False)
 
-def get_cursor_text(cursor):
+
+def get_cursor_text(cursor: clang.cindex.Cursor):
     """
     Returns the exact text corresponding to the cursor's extent.
     """
@@ -13,13 +20,30 @@ def get_cursor_text(cursor):
     file_name = extent.start.file.name
     # Read the file content
     try:
-        with open(file_name, 'r', encoding='utf-8') as f:
+        with open(file_name, 'rb') as f:
             content = f.read()
     # The extent provides offset values into the file content.
     except Exception as e:
-            logging.error(f"Error reading {file_name}: {e}")
+        logging.error(f"Error reading {file_name}: {e}")
+        return None
+    content = content[extent.start.offset:extent.end.offset].decode("utf-8")
+    return content
+
+# def get_cursor_text(cursor):
+#     """
+#     Returns the exact text corresponding to the cursor's extent.
+#     """
+#     extent = cursor.extent
+#     file_name = extent.start.file.name
+#     # Read the file content
+#     try:
+#         with open(file_name, 'r', encoding='utf-8') as f:
+#             content = f.read()
+#     # The extent provides offset values into the file content.
+#     except Exception as e:
+#             logging.error(f"Error reading {file_name}: {e}")
         
-    return content[extent.start.offset:extent.end.offset]
+#     return content[extent.start.offset:extent.end.offset]
 
 def get_functions(source_file):
     """

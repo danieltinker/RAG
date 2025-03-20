@@ -2,18 +2,24 @@
 
 import time
 import logging
-
 from config import OPENAI_API_KEY, EMBEDDING_MODEL
 from controllers import symbol_extractor
 from controllers.index_builder import IndexBuilder
 from services.embedding_service import EmbeddingService
 from services.search_service import SearchService
+from clang.cindex import LibclangError
+from utils.formatter import print_formatted_function_console  # Import the formatter
 
 def main():
     dir_path = input("Enter the path to your codebase directory: ").strip()
 
     start_time = time.time()
-    symbols = symbol_extractor.extract_symbols_from_directory(dir_path)
+    try:
+        symbols = symbol_extractor.extract_symbols_from_directory(dir_path)
+    except LibclangError:
+        print("Error using libclang, library path might be incorrect")
+        return
+    
     if not symbols:
         logging.error("No symbols found. Check the extraction method or the codebase contents.")
         return
@@ -34,7 +40,8 @@ def main():
         print("\nTop results:")
         for score, item in results:
             print(f"Score: {score:.3f} | Type: {item['type']} | Name: {item['name']} | File: {item['file']}")
-            print(item['name']+item['snippet'])
+            # Use the formatter to print the function snippet with syntax highlighting.
+            print_formatted_function_console(item['name'], item['snippet'])
             print("-" * 40)
 
 if __name__ == "__main__":

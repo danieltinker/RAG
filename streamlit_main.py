@@ -8,6 +8,7 @@ from controllers.symbol_extractor import extract_symbols_from_directory
 from services.embedding_service import EmbeddingService
 from controllers.index_builder import IndexBuilder
 from services.search_service import SearchService
+from utils.formatter import print_formatted_function_streamlit  # Import the formatter
 
 # Configure logging (optional)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
@@ -62,5 +63,6 @@ if st.button("Search"):
             for score, item in results:
                 st.markdown(f"**Score:** {score:.3f}")
                 st.markdown(f"**Type:** {item['type']} | **Name:** {item['name']} | **File:** {item['file']}")
-                st.code(item['name'] + ' ' + item['snippet'], language='cpp')
+                # Use the formatter to display the function snippet with syntax highlighting.
+                print_formatted_function_streamlit(item['name'], item['snippet'], language='cpp')
                 st.markdown("---")
