@@ -31,4 +31,5 @@ Retrieval-Augmented Generation (RAG) is designed to enhance the quality and fact
     **Terminal:**   run: python3 main.py
 
 # Disclaimers
-There is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
+1. There is NO caching layer, if you stop the program your embbedings will be recalculated from scratch.
+2. Cpp Methods are not supported.
