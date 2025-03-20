@@ -15,11 +15,11 @@ class IndexBuilder:
         total_symbols = len(symbols)
         for i in range(0, total_symbols, self.batch_size):
             batch = symbols[i:i+self.batch_size]
-            # Filter out symbols with empty snippets
-            valid_symbols = [s for s in batch if s['snippet'].strip()]
+            # Filter out symbols with empty or None snippets.
+            valid_symbols = [s for s in batch if s.get('snippet') and s['snippet'].strip()]
             if not valid_symbols:
                 continue
-            # Truncate each snippet to a safe token limit
+            # Truncate each snippet to a safe token limit.
             snippets = [truncate_text(s['snippet']) for s in valid_symbols]
             try:
                 embeddings = self.embedding_service.get_embeddings_batch(snippets)

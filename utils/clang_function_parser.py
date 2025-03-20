@@ -15,19 +15,49 @@ clang.cindex.Config.set_compatibility_check(False)
 def get_cursor_text(cursor: clang.cindex.Cursor):
     """
     Returns the exact text corresponding to the cursor's extent.
+    If the file information is not available, returns None.
     """
     extent = cursor.extent
+    if extent.start.file is None:
+        logging.warning("Cursor start file is None; skipping cursor text extraction.")
+        return None
+
     file_name = extent.start.file.name
-    # Read the file content
     try:
         with open(file_name, 'rb') as f:
             content = f.read()
-    # The extent provides offset values into the file content.
     except Exception as e:
         logging.error(f"Error reading {file_name}: {e}")
         return None
-    content = content[extent.start.offset:extent.end.offset].decode("utf-8")
-    return content
+
+    try:
+        snippet = content[extent.start.offset:extent.end.offset].decode("utf-8")
+    except Exception as e:
+        logging.error(f"Error decoding content from {file_name}: {e}")
+        return None
+
+    return snippet
+
+
+# def get_cursor_text(cursor: clang.cindex.Cursor):
+#     """
+#     Returns the exact text corresponding to the cursor's extent.
+#     """
+#     extent = cursor.extent
+#     file_name = extent.start.file.name
+#     # Read the file content
+#     try:
+#         with open(file_name, 'rb') as f:
+#             content = f.read()
+#     # The extent provides offset values into the file content.
+#     except Exception as e:
+#         logging.error(f"Error reading {file_name}: {e}")
+#         return None
+#     content = content[extent.start.offset:extent.end.offset].decode("utf-8")
+#     return content
+
+
+
 
 # def get_cursor_text(cursor):
 #     """
@@ -67,8 +97,14 @@ def get_functions(source_file):
         # Only process nodes that originate from the source file we are parsing.
         if cursor.location and cursor.location.file:
             if os.path.abspath(cursor.location.file.name) == os.path.abspath(source_file):
-                if cursor.kind in (clang.cindex.CursorKind.FUNCTION_DECL, 
-                                   clang.cindex.CursorKind.CXX_METHOD):
+                if cursor.kind in (clang.cindex.CursorKind.FUNCTION_DECL,
+                                   clang.cindex.CursorKind.OBJC_CLASS_METHOD_DECL, 
+                                   clang.cindex.CursorKind.CXX_METHOD,
+                                   clang.cindex.CursorKind.CLASS_DECL,
+                                   clang.cindex.CursorKind.CLASS_TEMPLATE,
+                                   clang.cindex.CursorKind.OBJC_CLASS_METHOD_DECL,
+                                   clang.cindex.CursorKind.OBJC_INSTANCE_METHOD_DECL,
+                                   ):
                     func_name = cursor.spelling
                     func_text = get_cursor_text(cursor)
                     functions.append((func_name, func_text))
@@ -77,3 +113,4 @@ def get_functions(source_file):
     
     visitor(translation_unit.cursor, None)
     return functions
+
