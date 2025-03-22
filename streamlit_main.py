@@ -40,8 +40,6 @@ if st.button("Build Index"):
                 # Update the placeholder with the error message.
                 st.error("Libclang Is Invalid, Cant parse c\c++ code")
                 
-            if not symbols:
-                st.error("No symbols found. Check the extraction method or your codebase contents.")
             else:
                 embedding_service = EmbeddingService(OPENAI_API_KEY, EMBEDDING_MODEL)
                 index_builder = IndexBuilder(embedding_service, batch_size=1000)
